@@ -1,19 +1,19 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-
+const userRouter = require("./routes/user-router");
 const app = express();
-const PORT = 3000;
+const PORT = 3002;
 
 const mongoUrl =
   "mongodb+srv://harsh:test1234@cluster0.dyqf09c.mongodb.net/?retryWrites=true&w=majority";
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome!", status: "Success", statusCode: 200 });
 });
 
-app.post("/api/v1/registerUser", (req, res) => {
-  res.json({ message: "user registered", status: "success" });
-});
+app.use("/api/v1", userRouter);
+
 mongoose.connect(mongoUrl).then(() => {
   console.log("connected to mongo");
 });
